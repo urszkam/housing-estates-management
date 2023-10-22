@@ -13,4 +13,9 @@ public class Boat extends Vehicle{
     public BoatType getBoatType() {
         return boatType;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", boat type: " + boatType;
+    }
 }

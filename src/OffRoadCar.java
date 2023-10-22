@@ -12,4 +12,9 @@ public class OffRoadCar extends Vehicle{
     public double getGroundClearance() {
         return groundClearance;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", ground clearance: " + groundClearance;
+    }
 }

@@ -21,4 +21,9 @@ public class Amphibious extends Vehicle{
     public int getMaxWaterSpeed() {
         return maxWaterSpeed;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", max land speed: " + maxLandSpeed;
+    }
 }

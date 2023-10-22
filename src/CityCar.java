@@ -14,4 +14,9 @@ public class CityCar extends Vehicle{
     public boolean isParkingAssist() {
         return parkingAssist;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", " + (parkingAssist ? "" : "no ") + "parking assist";
+    }
 }
