@@ -2,26 +2,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Room {
+    private static int nextId = 1;
     private boolean isRented;
     private int id;
     private double volume;
     private HousingEstate housingEstate;
+    private RoomType roomType;
     private Person responsibleForFees;
+    private List<Room> rooms = new ArrayList<>();
 
-    public Room(int id, double volume) {
+    public Room(HousingEstate estate, RoomType roomType, double volume) {
         this.isRented = false;
-        this.id = id;
+        this.id = nextId++;
         this.volume = volume;
-        this.housingEstate = null;
+        this.housingEstate = estate;
+        this.roomType = roomType;
         this.responsibleForFees = null;
+        rooms.add(this);
+        estate.addRoom(this);
     }
 
-    public Room(int id, double length, double width, double height) {
+    public Room(HousingEstate estate, RoomType roomType, double length, double width, double height) {
         this.isRented = false;
-        this.id = id;
+        this.id = nextId++;
         this.volume = this.calculateVolume(length, width, height);
-        this.housingEstate = null;
+        this.housingEstate = estate;
+        this.roomType = roomType;
         this.responsibleForFees = null;
+        rooms.add(this);
+        estate.addRoom(this);
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public Person getResponsibleForFees() {
+        return responsibleForFees;
     }
 
     private double calculateVolume(double a, double b, double c) {
@@ -55,10 +72,6 @@ public abstract class Room {
         return housingEstate;
     }
 
-    public void setHousingEstate(HousingEstate estate) {
-        this.housingEstate = estate;
-    }
-
     public boolean startNewRent(Person tenant) {
         if (tenant.canRent() && !this.isRented) {
             this.setResponsibleForFees(tenant);
@@ -69,21 +82,21 @@ public abstract class Room {
         return false;
     }
 
+    public abstract Rent findRent();
+
+    public Room getById(int id, RoomType roomType) {
+        return rooms.stream()
+                .filter(room -> room.getId() == id)
+                .filter(room -> room.getRoomType() == roomType)
+                .findFirst()
+                .orElse(null);
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder()
                 .append("ID: ").append(id).append(",")
-                .append(" volume: ").append(volume);
-//        if (itemsIn.size() > 0) {
-//            str.append(" Item(s) stored in:\n");
-//            for (Item item : itemsIn)
-//                str.append("\t" + item + "\n");
-//        } else str.append(" No items stored inside.\n");
-//        if (isRented) {
-//            str.append(" Tenants:\n");
-//            for (Person tenant : tenants)
-//                str.append("\t" + tenant + "\n");
-//        } else str.append(" Nobody rents this " + getClass().getSimpleName().toLowerCase() + ".\n");
+                .append(" volume: ").append(volume).append(" m^3");
         return str.toString();
     }
 }
