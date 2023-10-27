@@ -29,6 +29,6 @@ public abstract class Vehicle extends Item {
 
     @Override
     public String toString() {
-        return super.toString() + ", engine type: " + engineType;
+        return getClass().getSimpleName() +" " + super.toString() + ", engine type: " + engineType;
     }
 }
