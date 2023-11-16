@@ -1,12 +1,12 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HousingEstate {
     private static int nextId = 1;
     private static List<HousingEstate> estates = new ArrayList<>();
-    private  List<Room> rooms;
     private int id;
     private String name;
-    private List<Apartment> apartments;
+    private List<Room> rooms;
 
     public HousingEstate(String name) {
         this.name = name;
@@ -15,16 +15,19 @@ public class HousingEstate {
         estates.add(this);
     }
 
-    public List<Room> getRooms() {
+    public List<? extends Room> getRooms() {
         return rooms;
     }
 
-    public void addRoom(Room room) {
-        this.rooms.add(room);
+    public List<Room> getRooms(RoomType roomType) {
+        return rooms.stream()
+                .filter(room -> room.getRoomType() == roomType)
+                .sorted(Comparator.comparing(Room::getId))
+                .collect(Collectors.toList());
     }
 
-    public List<Apartment> getApartments() {
-        return apartments;
+    public <T extends Room> void addRoom(T room) {
+        rooms.add(room);
     }
 
     public int getId() {
