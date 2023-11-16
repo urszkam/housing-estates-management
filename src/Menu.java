@@ -291,20 +291,14 @@ public class Menu implements Runnable{
         apartmentsMenu();
     }
 
-    private void findApartById() {
-        int max = Apartment.getApartments().size();
-        System.out.println("\n--------------------------------\n" +
-                "\tFIND APARTMENT BY ID\n" +
-                "\tWrite down the ID number of a chosen Apartment \n" +
-                "\tor choose 0 to get back to Main Menu\n" +
-                "--------------------------------\n");
+    private int validateInput() {
         int input = -1;
         boolean isValid = false;
         while (!isValid) {
-            System.out.print("Choose option between " + 0 + " and " + max + ": ");
+            System.out.print("Choose option by typing down its number or type 0 to get back to menu:");
             try {
                 input = scanner.nextInt();
-                if (input >= 0 && input <= max) {
+                if (input >= 0) {
                     isValid = true;
                 } else {
                     System.out.println("Input is out of range.");
@@ -314,29 +308,55 @@ public class Menu implements Runnable{
                 scanner.nextLine();
             }
         }
-        if (input == 0) {
+        return input;
+    }
+
+    private void findApartById() {
+        int max = Apartment.getApartments().size();
+        System.out.println("\n--------------------------------\n" +
+                "\tFIND APARTMENT BY ID\n" +
+                "\tWrite down the ID number of a chosen Apartment \n" +
+                "\tor choose 0 to get back to Main Menu\n" +
+                "--------------------------------\n");
+        int id = -1;
+        boolean isValid = false;
+        while (!isValid) {
+            System.out.print("Choose option between " + 0 + " and " + max + ": ");
+            try {
+                id = scanner.nextInt();
+                if (id >= 0) {
+                    isValid = true;
+                } else {
+                    System.out.println("Input is out of range.");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.nextLine();
+            }
+        }
+        if (id == 0) {
             showMain();
         } else {
-            Apartment apart = (Apartment) findRoom(input, RoomType.APARTMENT);
-            System.out.println(apart != null ? apart : "Apartment no longer exists");
+            Apartment apart = (Apartment) Room.getByIdAndType(id, RoomType.APARTMENT);
+            System.out.println(apart != null ? apart : "Apartment with given id does NOT exist");
             findApartById();
         }
     }
 
-    public static Room findRoom(Integer id, RoomType roomType) {
-        Optional<? extends Room> optionalRoom = Optional.empty();
-        if (roomType == RoomType.APARTMENT)
-            optionalRoom = Apartment.getApartments().stream()
-                .filter(room -> room.getId() == id).findFirst();
-        else if (roomType == RoomType.PARKINGPLACE)
-            optionalRoom = ParkingPlace.getPlaces().stream()
-                    .filter(room -> room.getId() == id).findFirst();
-        if (optionalRoom.isPresent()) {
-            return optionalRoom.get();
-        } else {
-            return null;
-        }
-    }
+//    public static Room findRoom(Integer id, RoomType roomType) {
+//        Optional<? extends Room> optionalRoom = Optional.empty();
+//        optionalRoom = Optional.ofNullable(Room.getById(id));
+//        if (roomType == RoomType.APARTMENT)
+//
+//        else if (roomType == RoomType.PARKINGPLACE)
+//            optionalRoom = ParkingPlace.getPlaces().stream()
+//                    .filter(room -> room.getId() == id).findFirst();
+//        if (optionalRoom.isPresent()) {
+//            return optionalRoom.get();
+//        } else {
+//            return null;
+//        }
+//    }
 
     private void createApartment() {
         System.out.println("--------------------------------\n" +
