@@ -1,7 +1,12 @@
+package tenants;
+
+import estate.Rooms.Room;
+import exceptions.ProblematicTenantException;
+
 import java.util.*;
 
 public class Person {
-    private static final int maxRooms = 5;
+    private static final int MAX_ROOMS = 5;
     private static List<Person> people = new ArrayList<>();
     private static int nextId = 1;
     private String name;
@@ -56,7 +61,7 @@ public class Person {
     }
 
     public static int getMaxRooms() {
-        return maxRooms;
+        return MAX_ROOMS;
     }
 
     public void addRoom(Room room) {
@@ -71,13 +76,17 @@ public class Person {
         letters.add(letter);
     }
 
+    public List<TenantLetter> getLetters() {
+        return letters;
+    }
+
     public void checkNumOfLetters() throws ProblematicTenantException {
         if (letters.size() > 3)
             throw new ProblematicTenantException(this);
     }
 
     public boolean canRent() {
-        return rooms.size() < maxRooms;
+        return rooms.size() < MAX_ROOMS;
     }
 
     public static Person getById(int id) {
@@ -90,6 +99,7 @@ public class Person {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder()
+                .append("id: ").append(id).append(", ")
                 .append(this.getFullName())
                 .append(", address: ").append(address);
         return str.toString();

@@ -1,4 +1,8 @@
-public class CityCar extends Vehicle{
+package Items.vehicles;
+
+import Items.vehicles.types.EngineType;
+
+public class CityCar extends Vehicle {
     private boolean parkingAssist;
 
     public CityCar(String name, double engineCapacity, EngineType engineType, boolean parkingAssist, double volume) {

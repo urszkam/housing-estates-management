@@ -1,3 +1,8 @@
+package estate;
+
+import estate.Rooms.Room;
+import estate.Rooms.RoomType;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -1,5 +1,7 @@
+package exceptions;
+
 public class TooManyThingsException extends Exception{
     public TooManyThingsException() {
-            super("Remove some old items to insert a new item");
+            super("\n*Remove some old items to insert a new item*\n");
     }
 }

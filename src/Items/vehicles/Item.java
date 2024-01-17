@@ -1,3 +1,7 @@
+package Items.vehicles;
+
+import estate.Rooms.ParkingPlace;
+
 import java.util.*;
 
 public class Item {
@@ -6,11 +10,13 @@ public class Item {
     private String name;
     private static int nextId = 1;
     private int id;
+    private ParkingPlace place;
 
     public Item(String name, double volume) {
         this.id = nextId++;
         this.volume = volume;
         this.name = name;
+        this.place = null;
         items.add(this);
     }
 
@@ -18,7 +24,16 @@ public class Item {
         this.id = nextId++;
         this.volume = this.calculateVolume(length, width, height);
         this.name = name;
+        this.place = null;
         items.add(this);
+    }
+
+    public ParkingPlace getPlace() {
+        return place;
+    }
+
+    public void setPlace(ParkingPlace place) {
+        this.place = place;
     }
 
     public int getId() {
@@ -50,6 +65,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return  name + ", volume: " + volume + " m^3" ;
+        return  name + ", id: " + id + ", volume: " + volume + " m^3" ;
     }
 }

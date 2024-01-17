@@ -1,4 +1,8 @@
-public class OffRoadCar extends Vehicle{
+package Items.vehicles;
+
+import Items.vehicles.types.EngineType;
+
+public class OffRoadCar extends Vehicle {
     private double groundClearance;
     public OffRoadCar(String name, double engineCapacity, EngineType engineType, double groundClearance, double volume) {
         super(name, engineCapacity, engineType, volume);

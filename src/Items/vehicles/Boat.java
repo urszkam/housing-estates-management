@@ -1,4 +1,9 @@
-public class Boat extends Vehicle{
+package Items.vehicles;
+
+import Items.vehicles.types.BoatType;
+import Items.vehicles.types.EngineType;
+
+public class Boat extends Vehicle {
     private final BoatType boatType;
     public Boat(String name, double engineCapacity, EngineType engineType, BoatType boatType, double volume) {
         super(name, engineCapacity, engineType, volume);

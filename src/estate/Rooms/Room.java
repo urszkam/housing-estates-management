@@ -1,5 +1,12 @@
+package estate.Rooms;
+
+import estate.HousingEstate;
+import tenants.Person;
+import rents.Rent;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Room {
     private static int nextId = 1;
@@ -9,7 +16,7 @@ public abstract class Room {
     private HousingEstate housingEstate;
     private RoomType roomType;
     private Person responsibleForFees;
-    private List<Room> rooms = new ArrayList<>();
+    private static List<Room> rooms = new ArrayList<>();
 
     public Room(HousingEstate estate, RoomType roomType, double volume) {
         this.isRented = false;
@@ -82,12 +89,33 @@ public abstract class Room {
         return false;
     }
 
-    public abstract Rent findRent();
+    public Rent findRent() {
+        List<Rent> rents = Rent.getRents();
+        return rents.stream()
+                .filter(rent -> rent.getRoom() == this)
+                .findFirst()
+                .orElse(null);};
 
-    public Room getById(int id, RoomType roomType) {
+    public static List<Room> getRooms() {
+        return rooms;
+    }
+
+    public static Room getById(int id) {
         return rooms.stream()
                 .filter(room -> room.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static List<Room> getByType(RoomType roomType) {
+        return rooms.stream()
                 .filter(room -> room.getRoomType() == roomType)
+                .collect(Collectors.toList());
+    }
+
+    public static Room getByIdAndType(int id, RoomType type) {
+        return rooms.stream()
+                .filter(room -> room.getId() == id && room.getRoomType() == type)
                 .findFirst()
                 .orElse(null);
     }

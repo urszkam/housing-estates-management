@@ -1,4 +1,8 @@
-public class Motorcycle extends Vehicle{
+package Items.vehicles;
+
+import Items.vehicles.types.EngineType;
+
+public class Motorcycle extends Vehicle {
     private double seatHeight;
     public Motorcycle(String name, double engineCapacity, EngineType engineType, double seatHeight, double volume) {
         super(name, engineCapacity, engineType, volume);

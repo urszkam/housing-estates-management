@@ -1,3 +1,7 @@
+package Items.vehicles;
+
+import Items.vehicles.types.EngineType;
+
 import java.util.*;
 
 public abstract class Vehicle extends Item {
@@ -17,6 +21,10 @@ public abstract class Vehicle extends Item {
         this.engineCapacity = engineCapacity;
         this.engineType = engineType;
         vehicles.add(this);
+    }
+
+    public static List<Vehicle> getVehicles() {
+        return vehicles;
     }
 
     public double getEngineCapacity() {

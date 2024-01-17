@@ -1,3 +1,9 @@
+package estate.Rooms;
+
+import estate.HousingEstate;
+import Items.vehicles.Item;
+import exceptions.TooManyThingsException;
+
 import java.util.*;
 
 public class ParkingPlace extends Room {
@@ -34,19 +40,19 @@ public class ParkingPlace extends Room {
         if (item.getVolume() > this.calculateFreeSpace())
             throw new TooManyThingsException();
         itemsIn.add(item);
+        item.setPlace(this);
+    }
+
+    public void takeOutAll() {
+        for (Item item : itemsIn) {
+            item.setPlace(null);
+        }
+        itemsIn.clear();
     }
 
     public void takeOut(Item item) {
         itemsIn.remove(item);
-    }
-
-    @Override
-    public Rent findRent() {
-        List<Rent> rents = Rent.getRents();
-        return rents.stream()
-                .filter(rent -> rent.getParking() == this)
-                .findFirst()
-                .orElse(null);
+        item.setPlace(null);
     }
 
     @Override

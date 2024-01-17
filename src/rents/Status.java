@@ -1,22 +1,40 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+package rents;
 
-public class FileIO {
-    private static String filePath = "Status.txt";
+import estate.Rooms.Apartment;
+import estate.HousingEstate;
+import estate.Rooms.ParkingPlace;
+import estate.Rooms.Room;
+import estate.Rooms.RoomType;
+import Items.vehicles.Item;
+import tenants.Person;
+import util.Calendar;
+import util.FileIO;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class Status {
+    private HousingEstate estate;
     private String content;
+    private int id;
     private static int idCounter = 1;
 
-    public FileIO(HousingEstate estate) {
-        this.content = createContent(estate);
-        writeToFile();
+    public Status(HousingEstate estate) {
+        this.estate = estate;
+        this.id = idCounter++;
+        this.content = createContent();
+        saveStatus();
     }
 
-    public String createContent(HousingEstate estate) {
+    public String getContent() {
+        return content;
+    }
+
+    public String createContent() {
         StringBuilder status = new StringBuilder()
                 .append("-----------------------------------------------\n")
-                .append("Status ID: " + idCounter++ + ", date: " + Calendar.getToday() + "\n")
+                .append("rents.Status ID: " + id + ", date: " + Calendar.getToday() + "\n")
                 .append("Housing Estate: " + estate.getName() + "\n\n");
 
         Comparator<Room> roomComparator = Comparator.comparing(Room::getVolume);
@@ -24,7 +42,7 @@ public class FileIO {
                 .comparing(Item::getVolume, (v1, v2) -> Double.compare(v2, v1))
                 .thenComparing(Item::getName);
 
-        List<Room> rooms = estate.getRooms();
+        List<? extends Room> rooms = estate.getRooms();
         Collections.sort(rooms, roomComparator);
 
         int id = 1;
@@ -59,16 +77,7 @@ public class FileIO {
         return String.valueOf(status);
     }
 
-    public void writeToFile(){
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
-            bw.write(content);
-            bw.close();
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        }
+    public void saveStatus() {
+        new FileIO(this);
     }
-
 }
-
-
