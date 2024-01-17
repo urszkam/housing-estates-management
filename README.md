@@ -54,7 +54,8 @@ Save the status of persons residing in the housing estate and all data regarding
 ## Program Operation
 
 Start the application and interact with the functionalities via the command console and the implemented menu.
-![User Interface](resources/images/cmdUI.png)
-
+<p align="center">
+    <img src="resources/images/cmdUI.png" alt="cmd User Interface">
+</p>
 
 ### Feel free to explore and manage your housing estate efficiently using this application!
